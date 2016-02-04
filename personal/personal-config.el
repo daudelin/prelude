@@ -1,4 +1,4 @@
-;;; Personal Config -- Personal configuration within Emacs Prelude
+;;; Personal Config --- Personal configuration within Emacs Prelude
 
 ;;; Commentary:
 
@@ -19,6 +19,14 @@
        (cljr-add-keybindings-with-prefix "C-c C-r"))
 
      (add-hook 'clojure-mode-hook #'clojure-mode-clj-refactor-hook)))
+
+;; change eshell prompt to have format 'user@host $' on non-windows machines
+(unless (eq system-type 'windows-nt)
+  (setq eshell-prompt-function
+        (lambda ()
+          (concat (getenv "USER") "@"
+                  (car (split-string (getenv "HOSTNAME") "[.]"))
+                  (if (= (user-uid) 0) " # " " $ ")))))
 
 (provide 'personal-config)
 ;;; personal-config.el ends here
