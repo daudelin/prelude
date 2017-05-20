@@ -20,6 +20,12 @@
 
      (add-hook 'clojure-mode-hook #'clojure-mode-clj-refactor-hook)))
 
+;; CIDER cljs repl setup
+(setq cider-cljs-lein-repl
+      "(do (require 'figwheel-sidecar.repl-api)
+           (figwheel-sidecar.repl-api/start-figwheel!)
+           (figwheel-sidecar.repl-api/cljs-repl))")
+
 ;; change eshell prompt to have format 'user@host $' on non-windows machines
 (unless (eq system-type 'windows-nt)
   (setq eshell-prompt-function
@@ -27,6 +33,10 @@
           (concat (getenv "USER") "@"
                   (car (split-string (getenv "HOSTNAME") "[.]"))
                   (if (= (user-uid) 0) " # " " $ ")))))
+
+;; Ediff settings
+(setq ediff-split-window-function 'split-window-horizontally)
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
 (provide 'personal-config)
 ;;; personal-config.el ends here
